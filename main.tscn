@@ -1,11 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://d2g3dvd31owa5"]
+[gd_scene load_steps=4 format=3 uid="uid://d2g3dvd31owa5"]
 
+[ext_resource type="Script" path="res://main.gd" id="1_ex6yl"]
 [ext_resource type="PackedScene" uid="uid://3cq7oi7dmsvi" path="res://paddle.tscn" id="1_kgvwg"]
 [ext_resource type="PackedScene" uid="uid://gocll3dcybpf" path="res://ball.tscn" id="2_0x3j0"]
 
 [node name="Main" type="Node2D"]
+script = ExtResource("1_ex6yl")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

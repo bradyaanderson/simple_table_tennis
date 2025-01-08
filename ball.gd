@@ -9,7 +9,6 @@ func _ready():
     position = viewport_size / 2
     
     # Start the ball in a random direction
-    randomize()
     var angle = randf_range(-PI / 4, PI / 4) + (PI if randf() > 0.5 else 0)  # Randomize angle
     velocity = Vector2(cos(angle), sin(angle)) * speed
 
