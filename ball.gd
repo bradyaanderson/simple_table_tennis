@@ -12,14 +12,10 @@ func _ready():
     var angle = randf_range(-PI / 4, PI / 4) + (PI if randf() > 0.5 else 0)  # Randomize angle
     velocity = Vector2(cos(angle), sin(angle)) * speed
 
-func _process(delta):
+func _physics_process(delta):
     # Move the ball
     position += velocity * delta
 
     # Bounce off the top and bottom walls
     if position.y <= 10 or position.y >= 590:  # Screen edges at 10px margin
         velocity.y = -velocity.y
-
-func _on_body_entered(body):
-    # Reverse horizontal direction when hitting a paddle
-    velocity.x = -velocity.x

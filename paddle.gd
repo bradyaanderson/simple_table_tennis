@@ -6,7 +6,7 @@ extends Area2D
 @export var move_up_key: String = ""
 @export var move_down_key: String = ""
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
     var direction = 0
 
     # Check for movement input
