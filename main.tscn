@@ -29,6 +29,7 @@ move_up_key = "right_paddle_up"
 move_down_key = "right_paddle_down"
 
 [node name="Ball" parent="." instance=ExtResource("2_0x3j0")]
+collision_mask = 2
 
 [node name="ResetButton" parent="." instance=ExtResource("4_mlr14")]
 
