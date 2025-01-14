@@ -31,3 +31,5 @@ move_down_key = "right_paddle_down"
 [node name="Ball" parent="." instance=ExtResource("2_0x3j0")]
 
 [node name="ResetButton" parent="." instance=ExtResource("4_mlr14")]
+
+[connection signal="reset_game" from="ResetButton" to="." method="_on_reset_game"]

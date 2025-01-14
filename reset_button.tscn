@@ -1,15 +1,16 @@
 [gd_scene load_steps=2 format=3 uid="uid://dt6yjibhhc7pj"]
 
-[ext_resource type="Script" path="res://button.gd" id="1_fe648"]
+[ext_resource type="Script" path="res://reset_button.gd" id="1_s7gj1"]
 
 [node name="ResetButton" type="Control"]
 layout_mode = 3
 anchors_preset = 0
+script = ExtResource("1_s7gj1")
 
 [node name="Button" type="Button" parent="."]
+layout_mode = 0
 offset_right = 100.0
 offset_bottom = 33.0
 text = "Reset"
-script = ExtResource("1_fe648")
 
-[connection signal="pressed" from="Button" to="Button" method="_on_pressed"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
