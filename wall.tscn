@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3 uid="uid://dhua5ktupojuw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1n0do"]
+size = Vector2(800, 5)
+
+[node name="Wall" type="Control"]
+custom_minimum_size = Vector2(800, 5)
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Rect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Body" type="StaticBody2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape" type="CollisionShape2D" parent="Body"]
+position = Vector2(400, 2.5)
+shape = SubResource("RectangleShape2D_1n0do")

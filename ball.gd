@@ -10,6 +10,8 @@ func start_ball(start_position: Vector2):
 func _physics_process(delta):
     var collision = move_and_collide(velocity * delta)
     
+    print(get_viewport_rect().size)
+    
     # Handle wall collisions
     if position.y <= 10 or position.y >= 590:
         velocity.y = -velocity.y

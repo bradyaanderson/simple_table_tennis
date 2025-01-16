@@ -48,3 +48,4 @@ right_paddle_down={
 
 2d_physics/layer_1="ball"
 2d_physics/layer_2="paddle"
+2d_physics/layer_3="wall"
