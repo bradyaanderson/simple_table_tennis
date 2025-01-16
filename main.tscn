@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://3cq7oi7dmsvi" path="res://paddle.tscn" id="1_kgvwg"]
 [ext_resource type="PackedScene" uid="uid://gocll3dcybpf" path="res://ball.tscn" id="2_0x3j0"]
 [ext_resource type="PackedScene" uid="uid://dt6yjibhhc7pj" path="res://reset_button.tscn" id="4_mlr14"]
-[ext_resource type="PackedScene" uid="uid://dhua5ktupojuw" path="res://wall.tscn" id="5_ikjmp"]
+[ext_resource type="PackedScene" uid="uid://dtkyo5q5qsf3v" path="res://wall.tscn" id="5_ikjmp"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_ex6yl")
@@ -29,16 +29,14 @@ position = Vector2(750, 300)
 move_up_key = "right_paddle_up"
 move_down_key = "right_paddle_down"
 
-[node name="Ball" parent="." instance=ExtResource("2_0x3j0")]
-collision_mask = 2
-
 [node name="ResetButton" parent="." instance=ExtResource("4_mlr14")]
 
 [node name="TopWall" parent="." instance=ExtResource("5_ikjmp")]
+position = Vector2(0, -5)
 
 [node name="BottomWall" parent="." instance=ExtResource("5_ikjmp")]
-offset_top = 600.0
-offset_right = 800.0
-offset_bottom = 605.0
+position = Vector2(0, 600)
+
+[node name="Ball" parent="." instance=ExtResource("2_0x3j0")]
 
 [connection signal="reset_game" from="ResetButton" to="." method="_on_reset_game"]
