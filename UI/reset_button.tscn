@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dt6yjibhhc7pj"]
 
-[ext_resource type="Script" path="res://reset_button.gd" id="1_s7gj1"]
+[ext_resource type="Script" path="res://UI/reset_button.gd" id="1_s7gj1"]
 
 [node name="ResetButton" type="Control"]
 layout_mode = 3
