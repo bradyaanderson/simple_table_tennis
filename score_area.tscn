@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://dj6bf05i3fx55"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ocqpq"]
+size = Vector2(30, 600)
+
+[node name="ScoreArea" type="Area2D"]
+collision_layer = 8
+metadata/_edit_group_ = true
+
+[node name="ScoreCollisionArea" type="CollisionShape2D" parent="."]
+position = Vector2(0, 300)
+shape = SubResource("RectangleShape2D_ocqpq")
