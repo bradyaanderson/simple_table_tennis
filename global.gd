@@ -11,8 +11,6 @@ func _ready():
     
 func _on_left_score():
     left_score += 1
-    print("Left Score: ", left_score)
 
 func _on_right_score():
     right_score += 1
-    print("Right Score: ", right_score)
