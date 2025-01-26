@@ -4,6 +4,7 @@ extends CharacterBody2D
 @onready var wait_timer = $WaitTimer
 
 func start_ball(start_position: Vector2):
+    $CollisionShape.disabled = true
     position = start_position
     # Set initial velocity to zero while waiting
     velocity = Vector2.ZERO
@@ -19,6 +20,8 @@ func _physics_process(delta: float):
 
 func _on_wait_timer_timeout() -> void:
     # After timer expires, set the initial velocity
+    $CollisionShape.disabled = false
+    
     var angle = randf_range(-PI / 4, PI / 4) + (PI if randf() > 0.5 else 0)
     velocity = Vector2(cos(angle), sin(angle)) * speed
 
@@ -26,9 +29,11 @@ func _handle_collision(collision: KinematicCollision2D, original_velocity: Vecto
     var collider = collision.get_collider()
     var normal = collision.get_normal()
 
-        
-    if collider.is_in_group("paddle") && abs(normal.x) > abs(normal.y):
-        velocity = _calc_bounce_velocity_from_paddle(collider, collision.get_position())
+    if collider.is_in_group("paddle"):
+        if abs(normal.x) > abs(normal.y):
+            velocity = _calc_bounce_velocity_from_paddle(collider, collision.get_position())
+        else:
+            $CollisionShape.disabled = true
     else:
         velocity = velocity.bounce(collision.get_normal())
 
