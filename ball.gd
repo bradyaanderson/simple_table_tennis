@@ -1,52 +1,79 @@
 extends CharacterBody2D
 
 @export var speed: float = 300.0
+@export var wait_time: float = 1
+
 @onready var wait_timer = $WaitTimer
 
-func start_ball(start_position: Vector2):
-    $CollisionShape.disabled = true
-    position = start_position
-    # Set initial velocity to zero while waiting
-    velocity = Vector2.ZERO
-    wait_timer.start(1.0)
+func reset_ball(start_position: Vector2):
+   _disable_collisions()
+   position = start_position
+   _stop_movement()
+   _start_launch_countdown()
 
 func _physics_process(delta: float):
-    var original_velocity = velocity
-    var collision = move_and_collide(velocity * delta)
-    
-    # Add paddle collision check
-    if collision:
-        _handle_collision(collision, original_velocity)
+   var original_velocity = velocity
+   var collision = move_and_collide(velocity * delta)
+   
+   if collision:
+       _handle_collision(collision, original_velocity)
 
 func _on_wait_timer_timeout() -> void:
-    # After timer expires, set the initial velocity
-    $CollisionShape.disabled = false
-    
-    var angle = randf_range(-PI / 4, PI / 4) + (PI if randf() > 0.5 else 0)
-    velocity = Vector2(cos(angle), sin(angle)) * speed
+   _enable_collisions()
+   _launch_in_random_direction()
 
 func _handle_collision(collision: KinematicCollision2D, original_velocity: Vector2) -> void:
-    var collider = collision.get_collider()
-    var normal = collision.get_normal()
+   var collider = collision.get_collider()
+   var normal = collision.get_normal()
+   
+   if collider.is_in_group("paddle"):
+       _handle_paddle_collision(collider, collision)
+   else:
+       _bounce_off_wall(collision.get_normal())
 
-    if collider.is_in_group("paddle"):
-        if abs(normal.x) > abs(normal.y):
-            velocity = _calc_bounce_velocity_from_paddle(collider, collision.get_position())
-        else:
-            $CollisionShape.disabled = true
-    else:
-        velocity = velocity.bounce(collision.get_normal())
+func _handle_paddle_collision(paddle: Node, collision: KinematicCollision2D) -> void:
+   var is_side_hit = _is_side_collision(collision.get_normal())
+   
+   if is_side_hit:
+       _calculate_and_apply_paddle_bounce(paddle, collision.get_position())
+   else:
+       _disable_collisions()
 
-func _calc_bounce_velocity_from_paddle(paddle: Node, collision_point: Vector2) -> Vector2:
- # Get the bounce angle from the paddle
-    var bounce_angle = paddle.get_bounce_angle(collision_point)
+func _bounce_off_wall(normal: Vector2) -> void:
+   velocity = velocity.bounce(normal)
 
-    # Determine the bounce direction based on the paddle's position
-    # Assuming paddles are placed on the left and right sides of the screen
-    var is_left_paddle = paddle.global_position.x < global_position.x
+func _is_side_collision(normal: Vector2) -> bool:
+   return abs(normal.x) > abs(normal.y)
 
-    # Flip X velocity depending on whether it's a left or right paddle
-    var x_direction = 1 if is_left_paddle else -1
+func _calculate_and_apply_paddle_bounce(paddle: Node, collision_point: Vector2) -> void:
+   var bounce_angle = paddle.get_bounce_angle(collision_point)
+   var x_direction = _get_direction_from_paddle(paddle)
+   velocity = _calculate_bounce_velocity(bounce_angle, x_direction)
 
-    # Construct the velocity vector with correct direction
-    return Vector2(cos(bounce_angle) * x_direction, sin(bounce_angle)) * speed
+func _get_direction_from_paddle(paddle: Node2D) -> int:
+   return 1 if paddle.global_position.x < global_position.x else -1
+
+func _calculate_bounce_velocity(angle: float, direction: int) -> Vector2:
+   return Vector2(cos(angle) * direction, sin(angle)) * speed
+
+func _launch_in_random_direction() -> void:
+   var angle = _calculate_random_launch_angle()
+   velocity = Vector2(cos(angle), sin(angle)) * speed
+
+func _calculate_random_launch_angle() -> float:
+   var base_angle = randf_range(-PI / 4, PI / 4)
+   var direction_modifier = PI if randf() > 0.5 else 0
+   return base_angle + direction_modifier
+
+func _start_launch_countdown() -> void:
+   wait_timer.start(wait_time)
+
+func _stop_movement() -> void:
+   velocity = Vector2.ZERO
+
+# Private methods - Collision state
+func _enable_collisions() -> void:
+   $CollisionShape.disabled = false
+   
+func _disable_collisions() -> void:
+   $CollisionShape.disabled = true
