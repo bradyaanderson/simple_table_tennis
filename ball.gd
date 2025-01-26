@@ -1,22 +1,27 @@
 extends CharacterBody2D
 
-@export var speed: float = 300.0
+@export var base_speed: float = 400.0
+@export var max_speed: float = 700.0
+@export var speed_increase: float = 20.0
 @export var wait_time: float = 1
 
 @onready var wait_timer = $WaitTimer
 
+var current_speed: float
+
 func reset_ball(start_position: Vector2):
-   _disable_collisions()
-   position = start_position
-   _stop_movement()
-   _start_launch_countdown()
+    _disable_collisions()
+    position = start_position
+    _stop_movement()
+    _reset_speed()
+    _start_launch_countdown()
 
 func _physics_process(delta: float):
-   var original_velocity = velocity
-   var collision = move_and_collide(velocity * delta)
-   
-   if collision:
-       _handle_collision(collision, original_velocity)
+    var original_velocity = velocity
+    var collision = move_and_collide(velocity * delta)
+    
+    if collision:
+        _handle_collision(collision, original_velocity)
 
 func _on_wait_timer_timeout() -> void:
    _enable_collisions()
@@ -32,12 +37,19 @@ func _handle_collision(collision: KinematicCollision2D, original_velocity: Vecto
        _bounce_off_wall(collision.get_normal())
 
 func _handle_paddle_collision(paddle: Node, collision: KinematicCollision2D) -> void:
-   var is_side_hit = _is_side_collision(collision.get_normal())
-   
-   if is_side_hit:
-       _calculate_and_apply_paddle_bounce(paddle, collision.get_position())
-   else:
-       _disable_collisions()
+    var is_side_hit = _is_side_collision(collision.get_normal())
+    
+    if is_side_hit:
+        _increase_speed()
+        _calculate_and_apply_paddle_bounce(paddle, collision.get_position())
+    else:
+        _disable_collisions()
+
+func _increase_speed() -> void:
+    current_speed = clamp(current_speed + speed_increase, base_speed, max_speed)
+
+func _reset_speed() -> void:
+    current_speed = base_speed
 
 func _bounce_off_wall(normal: Vector2) -> void:
    velocity = velocity.bounce(normal)
@@ -54,11 +66,11 @@ func _get_direction_from_paddle(paddle: Node2D) -> int:
    return 1 if paddle.global_position.x < global_position.x else -1
 
 func _calculate_bounce_velocity(angle: float, direction: int) -> Vector2:
-   return Vector2(cos(angle) * direction, sin(angle)) * speed
+    return Vector2(cos(angle) * direction, sin(angle)) * current_speed
 
 func _launch_in_random_direction() -> void:
-   var angle = _calculate_random_launch_angle()
-   velocity = Vector2(cos(angle), sin(angle)) * speed
+    var angle = _calculate_random_launch_angle()
+    velocity = Vector2(cos(angle), sin(angle)) * current_speed
 
 func _calculate_random_launch_angle() -> float:
    var base_angle = randf_range(-PI / 4, PI / 4)

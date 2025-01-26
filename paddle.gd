@@ -1,6 +1,6 @@
 extends StaticBody2D
 
-@export var speed: float = 300
+@export var speed: float = 500
 
 @export var move_up_key: String = ""
 @export var move_down_key: String = ""
