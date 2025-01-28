@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://d2g3dvd31owa5"]
+[gd_scene load_steps=8 format=3 uid="uid://d2g3dvd31owa5"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_ex6yl"]
 [ext_resource type="PackedScene" uid="uid://3cq7oi7dmsvi" path="res://paddle.tscn" id="1_kgvwg"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dj6bf05i3fx55" path="res://score_area.tscn" id="2_mnukj"]
 [ext_resource type="PackedScene" uid="uid://dt6yjibhhc7pj" path="res://UI/reset_button.tscn" id="4_mlr14"]
 [ext_resource type="PackedScene" uid="uid://dtkyo5q5qsf3v" path="res://wall.tscn" id="5_ikjmp"]
+[ext_resource type="PackedScene" uid="uid://dm8p77stgroyj" path="res://UI/score_label.tscn" id="7_gj2n4"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_ex6yl")
@@ -46,6 +47,15 @@ position = Vector2(0, 600)
 
 [node name="Ball" parent="." instance=ExtResource("2_0x3j0")]
 position = Vector2(-11, -11)
+
+[node name="LeftLabel" parent="." instance=ExtResource("7_gj2n4")]
+offset_left = 100.0
+offset_right = 140.0
+
+[node name="RightLabel" parent="." instance=ExtResource("7_gj2n4")]
+offset_left = 700.0
+offset_right = 740.0
+score_type = "Right"
 
 [connection signal="body_entered" from="RightScoreArea" to="." method="_on_right_score_area_body_entered"]
 [connection signal="body_entered" from="LeftScoreArea" to="." method="_on_left_score_area_body_entered"]

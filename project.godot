@@ -28,6 +28,7 @@ window/size/resizable=false
 [global_group]
 
 paddle=""
+score_labels=""
 
 [input]
 

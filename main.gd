@@ -28,6 +28,11 @@ func _calculate_center_position() -> Vector2:
 
 func _award_point_to_left_player() -> void:
    left_score.emit()
+   _update_scores()
 
 func _award_point_to_right_player() -> void:
    right_score.emit()
+   _update_scores()
+
+func _update_scores() -> void:
+  get_tree().call_group("score_labels", "on_score_change")

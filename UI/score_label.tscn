@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dm8p77stgroyj"]
+
+[ext_resource type="Script" path="res://UI/score_label.gd" id="1_08gqv"]
+
+[node name="ScoreLabel" type="Label" groups=["score_labels"]]
+offset_right = 40.0
+offset_bottom = 23.0
+script = ExtResource("1_08gqv")
