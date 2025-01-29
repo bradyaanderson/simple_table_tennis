@@ -49,12 +49,12 @@ position = Vector2(0, 600)
 position = Vector2(-11, -11)
 
 [node name="LeftLabel" parent="." instance=ExtResource("7_gj2n4")]
-offset_left = 100.0
-offset_right = 140.0
+offset_left = 200.0
+offset_right = 240.0
 
 [node name="RightLabel" parent="." instance=ExtResource("7_gj2n4")]
-offset_left = 700.0
-offset_right = 740.0
+offset_left = 600.0
+offset_right = 640.0
 score_side = 1
 
 [connection signal="body_entered" from="RightScoreArea" to="." method="_on_right_score_area_body_entered"]

@@ -1,8 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://dm8p77stgroyj"]
+[gd_scene load_steps=4 format=3 uid="uid://dm8p77stgroyj"]
 
 [ext_resource type="Script" path="res://UI/score_label.gd" id="1_08gqv"]
+[ext_resource type="FontFile" uid="uid://ny4a0xaoh7j4" path="res://fonts/Xolonium-Regular.ttf" id="1_qsx5j"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_e7un7"]
+font = ExtResource("1_qsx5j")
+font_size = 48
 
 [node name="ScoreLabel" type="Label" groups=["score_labels"]]
 offset_right = 40.0
 offset_bottom = 23.0
+label_settings = SubResource("LabelSettings_e7un7")
 script = ExtResource("1_08gqv")
