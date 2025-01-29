@@ -55,7 +55,7 @@ offset_right = 140.0
 [node name="RightLabel" parent="." instance=ExtResource("7_gj2n4")]
 offset_left = 700.0
 offset_right = 740.0
-score_type = "Right"
+score_side = 1
 
 [connection signal="body_entered" from="RightScoreArea" to="." method="_on_right_score_area_body_entered"]
 [connection signal="body_entered" from="LeftScoreArea" to="." method="_on_left_score_area_body_entered"]

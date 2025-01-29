@@ -17,19 +17,17 @@ func reset_ball(start_position: Vector2):
     _start_launch_countdown()
 
 func _physics_process(delta: float):
-    var original_velocity = velocity
     var collision = move_and_collide(velocity * delta)
     
     if collision:
-        _handle_collision(collision, original_velocity)
+        _handle_collision(collision)
 
 func _on_wait_timer_timeout() -> void:
    _enable_collisions()
    _launch_in_random_direction()
 
-func _handle_collision(collision: KinematicCollision2D, original_velocity: Vector2) -> void:
+func _handle_collision(collision: KinematicCollision2D) -> void:
    var collider = collision.get_collider()
-   var normal = collision.get_normal()
    
    if collider.is_in_group("paddle"):
        _handle_paddle_collision(collider, collision)
